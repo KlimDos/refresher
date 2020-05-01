@@ -1,3 +1,4 @@
+wheel
 selenium
-telegram
+python-telegram-bot
 Pillow
