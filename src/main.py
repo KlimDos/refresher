@@ -3,6 +3,7 @@ from time import sleep
 import telegram
 import logging
 import sys
+from PIL import Image
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
@@ -10,12 +11,16 @@ tg_token = sys.argv[1]
 tg_user = '242426387'
 screenshot = 'welcome_page.png'
 chrome_options = webdriver.chrome.options.Options()
-chrome_options.add_argument("--window-size=640,680")
+#chrome_options.add_argument("--window-size=640,680")
+#chrome_options.add_argument("--start-minimized")
 driver = webdriver.Chrome(chrome_options=chrome_options)
 
 def send(image_path, chat_id=tg_user, token=tg_token):
     bot = telegram.Bot(token=token)
-    bot.send_photo(chat_id=chat_id, photo=open(image_path, 'rb'))
+    try:
+        bot.send_photo(chat_id=chat_id, photo=open(image_path, 'rb'))
+    except:
+        print("cant send")
 
 def getElement(element: str, mode: str) -> object:
     '''
@@ -45,21 +50,43 @@ def refresh(url: str, interval: int, count: int):
         driver.get(url)
     return()
 
+def takeScr(url, path):
+    print(f"Opening {url} in Chrome...")
+    driver.get(url)
+    sleep(5)
+    driver.save_screenshot(path)
+    print(f"Closing Chrome...")
+    driver.quit()
+    return (path)
+
 def main():
     url = sys.argv[2]
     find_element = 'loginPage\:SiteTemplate\:siteLogin\:loginComponent\:loginForm\:loginButton'
     find_element_2 = '/html/body/div[1]/div/div/div/span/form/div[2]/div[2]/table/tbody/tr[3]/td/label/input'
-    refresh_interval = 10
+    refresh_interval = 60
+    frame = (450, 1000, 800, 1130)
+    i = 0
 
     print(f"Opening {url} in Chrome...")
     driver.get(url)
-    sleep(5)
-    driver.save_screenshot(screenshot)
-    getElement(find_element_2, "xpath").click()
-    send(screenshot)
-    sleep(refresh_interval)
-    print("Closing Chrome")
+    input("Proceed with login then press any key to continue...")
+    while True:
+        i += 1
+        driver.save_screenshot(screenshot)
+        print (f"screenshot #{i}")
+        Image.open(screenshot).crop(frame).save(screenshot)
+        send(screenshot)
+        sleep(refresh_interval)
+    print(f"Closing Chrome...")
     driver.quit()
+
+    # pic = takeScr(url,screenshot)
+    # Image.open(pic).crop((775, 970, 1230, 1230)).save(pic)
+    # send(pic)
+    #getElement(find_element_2, "xpath").click()
+    #sleep(refresh_interval+30)
+    #print("Closing Chrome")
+    #driver.quit()
 
 if __name__ == '__main__':
     main()
