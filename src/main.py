@@ -75,6 +75,8 @@ def main():
         i += 1
         driver.save_screenshot(screenshot)
         print (f"screenshot #{i}")
+        if sys.argv[4] == "setup":
+            frame = eval(input("frame="))
         Image.open(screenshot).crop(frame).save(screenshot)
         send(screenshot)
         sleep(refresh_interval)
