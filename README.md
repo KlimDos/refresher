@@ -14,3 +14,6 @@
 - `spctl --add --label 'Approved' chromedriver` or `xattr -d com.apple.quarantine <name-of-executable>`
 
 - export tg_token
+
+example:
+`python src/main.py "aaaaaabbbbbbxxxxxx" "https://google.com/" "10" "450, 1000, 800, 1130"`

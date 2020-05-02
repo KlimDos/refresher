@@ -11,7 +11,7 @@ tg_token = sys.argv[1]
 tg_user = '242426387'
 screenshot = 'welcome_page.png'
 chrome_options = webdriver.chrome.options.Options()
-#chrome_options.add_argument("--window-size=640,680")
+chrome_options.add_argument("--window-size=1200,1000")
 #chrome_options.add_argument("--start-minimized")
 driver = webdriver.Chrome(chrome_options=chrome_options)
 
@@ -19,8 +19,10 @@ def send(image_path, chat_id=tg_user, token=tg_token):
     bot = telegram.Bot(token=token)
     try:
         bot.send_photo(chat_id=chat_id, photo=open(image_path, 'rb'))
-    except:
-        print("cant send")
+    except Exception as e:
+        print("Cant send. Error:")
+        print(e)
+
 
 def getElement(element: str, mode: str) -> object:
     '''
@@ -63,10 +65,9 @@ def main():
     url = sys.argv[2]
     find_element = 'loginPage\:SiteTemplate\:siteLogin\:loginComponent\:loginForm\:loginButton'
     find_element_2 = '/html/body/div[1]/div/div/div/span/form/div[2]/div[2]/table/tbody/tr[3]/td/label/input'
-    refresh_interval = 60
-    frame = (450, 1000, 800, 1130)
+    refresh_interval = int(sys.argv[3])
+    frame = eval(sys.argv[4])
     i = 0
-
     print(f"Opening {url} in Chrome...")
     driver.get(url)
     input("Proceed with login then press any key to continue...")
