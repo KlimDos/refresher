@@ -69,18 +69,19 @@ def main():
     frame = eval(sys.argv[4])
     i = 0
     print(f"Opening {url} in Chrome...")
-    driver.get(url)
+    driver.get(url+"/applicanthome")
     input("Proceed with login then press any key to continue...")
     while True:
         i += 1
+        driver.get(url+"/scheduleappointment")
         driver.save_screenshot(screenshot)
         print (f"screenshot #{i}")
         if sys.argv[4] == "setup":
             frame = eval(input("frame="))
         Image.open(screenshot).crop(frame).save(screenshot)
         send(screenshot)
+        driver.get(url+"/applicanthome")
         sleep(refresh_interval)
-        driver.get(url)
     print(f"Closing Chrome...")
     driver.quit()
 
