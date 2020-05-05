@@ -80,6 +80,7 @@ def main():
         Image.open(screenshot).crop(frame).save(screenshot)
         send(screenshot)
         sleep(refresh_interval)
+        driver.get(url)
     print(f"Closing Chrome...")
     driver.quit()
 
