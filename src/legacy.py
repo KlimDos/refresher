@@ -12,7 +12,6 @@ tg_user = '242426387'
 screenshot = 'welcome_page.png'
 chrome_options = webdriver.chrome.options.Options()
 chrome_options.add_argument("--window-size=1200,1000")
-#chrome_options.add_argument("--start-minimized")
 driver = webdriver.Chrome(chrome_options=chrome_options)
 
 def send(image_path, chat_id=tg_user, token=tg_token):
