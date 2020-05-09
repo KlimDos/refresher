@@ -26,3 +26,8 @@ refresh_int = int
 
 ## Run:
 `python src/refresher.py`
+    
+## ngrok
+
+curl https://api.telegram.org/bot{BOT_KEY}/setWebhook?url={NGROK_URL}
+curl "https://api.telegram.org/bot{config.tg_token}/setWebhook?url=https://bc038cae.ngrok.io/postjson"

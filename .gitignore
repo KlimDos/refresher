@@ -5,3 +5,5 @@ venv
 *.png
 /bin
 config.py
+*.pkl
+*.json

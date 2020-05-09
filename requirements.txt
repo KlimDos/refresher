@@ -1,3 +1,6 @@
 wheel
 selenium
 python-telegram-bot
+flask
+pyngrok
+requests

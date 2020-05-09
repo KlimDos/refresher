@@ -4,6 +4,7 @@ from selenium import webdriver
 from time import sleep
 import telegram
 import config # private data set
+import pickle
 
 screnshot_path  = 'screenshot.png'
 input_login     = '//*[@id="loginPage:SiteTemplate:siteLogin:loginComponent:loginForm:username"]'
@@ -15,7 +16,10 @@ url_first_page  = "/applicanthome"
 url_last_page   = "/scheduleappointment"
 
 def init() -> object: 
-    driver = webdriver.Chrome()
+
+    chrome_options = webdriver.chrome.options.Options()
+    chrome_options.add_experimental_option("w3c", False)
+    driver = webdriver.Chrome(chrome_options=chrome_options)
     print(f"Opening {config.url} in Chrome...")
     driver.get(config.url)
     return(driver)
@@ -56,14 +60,31 @@ def main():
     getElement(driver, input_captcha_response, "xpath").click()
     # add capcha # some_data = getElement(input_some_data, "xpath")
     input("Proceed with login then press any key to continue...")
-    i = 0
-    while True:
-        i += 1
-        driver.refresh
-        driver.save_screenshot(screnshot_path)
-        send(screnshot_path)
-        print(f"sent screnshot #{i}")
-        sleep(config.refresh_int)
+
+    pickle.dump(driver.get_cookies(), open("cookies.pkl", "wb"))
+    driver.close()
+    sleep(2)
+
+    chrome_options = webdriver.chrome.options.Options()
+    chrome_options.add_experimental_option("w3c", False)
+    driver2 = webdriver.Chrome(chrome_options=chrome_options)
+    print(f"Opening {config.url} in Chrome...")
+    driver2.get(config.url)
+    cookies = pickle.load(open("cookies.pkl", "rb"))
+    for cookie in cookies:
+        driver2.add_cookie(cookie)
+    driver2.get(config.url+url_first_page)
+    input("any key to exit")
+    #i = 0
+    # while True:
+    #     i += 1
+    #     driver.refresh
+        
+    #     driver.save_screenshot(screnshot_path)
+    #     send(screnshot_path)
+    #     print(f"sent screnshot #{i}")
+    #     sleep(config.refresh_int)
+
     return()
 
 if __name__ == '__main__':
