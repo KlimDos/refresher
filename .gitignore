@@ -7,3 +7,4 @@ venv
 config.py
 *.pkl
 *.json
+logs
