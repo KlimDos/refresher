@@ -31,3 +31,9 @@ refresh_int = int
 
 curl https://api.telegram.org/bot{BOT_KEY}/setWebhook?url={NGROK_URL}
 curl "https://api.telegram.org/bot{config.tg_token}/setWebhook?url=https://bc038cae.ngrok.io/postjson"
+
+
+todo
+
+- mkdir logs
+- add `bot-response.json` some how
