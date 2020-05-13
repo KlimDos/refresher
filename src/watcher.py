@@ -37,7 +37,7 @@ def main():
     i = 0
     while True:
         i += 1
-        driver.refresh
+        driver.get(config.url+url_first_page)
         #div = getElement(driver, new_applocation).screenshot(screnshot_path)
         driver.save_screenshot(screnshot_path)
         #print(type(div))
