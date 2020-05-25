@@ -43,6 +43,7 @@ def getCookies(cookies_file):
     getElement(driver, input_login_bt).click()
     sleep(5)
     pickle.dump(driver.get_cookies(), open(cookies_file, "wb"))
+    input("press any key to exit")
     driver.close()
     return()
 
@@ -56,7 +57,6 @@ def getElement(driver: object, element: str) -> object:
 
 def main():
     getCookies("cookies.pkl")
-    input("press any key to exit")
     return()
 
 if __name__ == '__main__':
